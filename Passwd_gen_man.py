@@ -3,6 +3,8 @@ import datetime
 import mysql.connector
 import getpass
 
+
+# Method for generating the password that builds upon the results of othe functions
 def password_generation():
     print("Recommended to have a Password Length above 12 characters")
     passwd_length = int(
@@ -25,6 +27,7 @@ def password_generation():
         print("Your Password is : {}\n".format(password))
 
 
+# Method/function to select the numeric characters for the password
 def num_chr(max_limit):
     all_num = []
     prev = None
@@ -37,6 +40,7 @@ def num_chr(max_limit):
     return all_num
 
 
+# Method/function to select the alphabetical characters for the password
 def alp_chr(max_limit):
     all_alp = []
     prev = None
@@ -55,6 +59,7 @@ def alp_chr(max_limit):
     return all_alp
 
 
+# Method/function to select the special characters for the password
 def spec_chr(max_limit):
     spc_lst = ["@", "^", "#", "$", "!", "%", "*", "&"]
     all_spc = []
@@ -68,6 +73,7 @@ def spec_chr(max_limit):
     return all_spc
 
 
+# Method that allocates the limit for each type of character and sets the password length
 def length_setter(max_chr, passwd_restrictions):
     total = 0
     if passwd_restrictions == True:
@@ -110,6 +116,7 @@ time = datetime.datetime.now()
 modify_time = time.strftime("%Y-%m-%d %H:%M:%S")
 
 
+# Grouped the database functions together so that the user won't have to login again to perform any specific function
 class Password_Management:
     def __init__(self):
         self.username = getpass.getpass("Enter your SQL username: ")
@@ -132,6 +139,7 @@ class Password_Management:
             print("Please try again")
             self.__init__()
 
+    # Method for editing the amount of tables in the database
     def storage_mgmt(self):
         print(
             "1. Do you want to create a new table?\n2. Do you want to delete an existing table?"
@@ -178,6 +186,7 @@ class Password_Management:
                     print("Please try again")
                     self.storage_mgmt()
 
+    # Method for saving the password to the database
     def save_password(self):
         self.my_cursor.execute("SHOW TABLES;")
         tables = self.my_cursor.fetchall()
@@ -205,6 +214,7 @@ class Password_Management:
             print("Please try again")
             self.save_password()
 
+    # Method to remove a password from the database
     def password_removal(self):
         table_name = input(
             "Enter the table name you want to Delete the password from: "
@@ -230,6 +240,7 @@ class Password_Management:
             print("Please try again")
             self.password_removal()
 
+    # Method to get a password from the database
     def extraction(self):
         table_name = input(
             "Enter the table name you want to extract/get the password from: "
@@ -296,10 +307,3 @@ def Menu():
 
 Menu()
 
-
-# Add comments explanations
-
-# password strength check - regex
-
-
-# Implement cloud services and take this database possibly on the cloud
