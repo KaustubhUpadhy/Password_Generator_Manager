@@ -2,6 +2,7 @@ import random
 import datetime
 import mysql.connector
 import getpass
+import re
 
 
 # Method for generating the password that builds upon the results of othe functions
@@ -95,21 +96,24 @@ def strength_checker(password):
     points = 0
     if len(password) >= 12:
         points += 1
-
-    # check num characters
-    # check special characters
-    # check alpha lowercase characters
-    # check alpha uppercase characters
-    # regex for all above
-    # unpredicatbility, no repetiton
-    if points <= 2:
-        print("Weak Password, Improvement required !!")
-    elif points >= 2 & points <= 4:
-        print("Good but can be improved !!")
-    elif points >= 4 & points <= 6:
-        print("Strong Password")
-    else:
-        print("Excellent Password !!")
+    low = re.search("[a-z]", password)
+    if low:
+        points += 1
+    upper = re.search("[A-Z]", password)
+    if upper:
+        points += 1
+    num = re.search("[0-9]", password)
+    if num:
+        points += 1
+    spc = re.search("[(@^#$!%*&)]", password)
+    if spc:
+        points += 1
+    if points > 2:
+        print("Password is weak!!")
+    if points >= 2 & points <= 4:
+        print("Good Password!!Can be improved")
+    if points >= 5:
+        print("Excellent!! This is a very Strong Password")
 
 
 time = datetime.datetime.now()
@@ -284,7 +288,7 @@ def Menu():
         storage.storage_mgmt()
         Menu()
     elif generation == 3:
-        password = input("Please enter the password: ")
+        password = getpass.getpass(input("Please enter the password: "))
         strength_checker(password)
         Menu()
     elif generation == 4:
