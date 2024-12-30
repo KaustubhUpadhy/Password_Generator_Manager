@@ -12,7 +12,7 @@ def password_generation():
         input("How many characters do you want in your password( from 8-16)?: ")
     )
     passwd_restrictions = input("Do you want special characters in your password?: ")
-    if passwd_restrictions.upper() == "YES":
+    if passwd_restrictions.upper() == "YES" or "Y":
         passwd_restrictions = True
         spc, alp, num = length_setter(passwd_length, passwd_restrictions)
         fin_lst = num_chr(num) + alp_chr(alp) + spec_chr(spc)
@@ -280,7 +280,7 @@ def Menu():
     print(
         "6. Do you want to delete a Password from the storage?\n7. Do you want to exit?:"
     )
-    generation = int(input("What do you want to do?:"))
+    generation = int(input("What do you want to do?(Enter the number for each option):"))
     if generation == 1:
         password_generation()
         Menu()
